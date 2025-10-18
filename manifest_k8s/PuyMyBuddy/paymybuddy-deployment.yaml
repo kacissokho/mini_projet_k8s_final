@@ -16,7 +16,8 @@ spec:
     spec:
       containers:
       - name: paymybuddy
-        image: paymybuddy:latest  # Remplacez par l'image réelle
+        image: paymybuddy:latest
+        imagePullPolicy: Never
         ports:
         - containerPort: 8080
         env:

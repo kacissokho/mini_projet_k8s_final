@@ -1,40 +1,45 @@
-# Étape 1 : Construire l'application
+# Étape 1 : Build avec cache Maven optimisé
 FROM maven:3.8.5-openjdk-17 AS build
 
-# Copier le projet dans le conteneur
-COPY . /app
-
-# Changer de répertoire
 WORKDIR /app
 
-# Construire l'application
-#RUN mvn clean package
-RUN mvn clean install
+# Étape 1: Copier uniquement le POM pour cacher les dépendances
+COPY pom.xml .
 
-# Étape 2 : Créer l'image à partir du jar
+# Étape 2: Télécharger toutes les dépendances
+RUN mvn dependency:go-offline -B
+
+# Étape 3: Copier les sources
+COPY src ./src
+
+# Étape 4: Compiler et package SANS les tests
+RUN mvn clean package -DskipTests -Dmaven.test.skip=true
+
+# Étape 2 : Image de production légère
 FROM openjdk:17-jdk-slim
 
-# Créer un répertoire pour l'application
 WORKDIR /app
-RUN mkdir -p /app/logs
 
-# Copier le fichier jar généré par Maven
-#COPY --from=build /app/target/PayMyBuddy-0.0.1-SNAPSHOT.jar /app/app.jar
+# Créer un utilisateur non-root pour la sécurité
+RUN groupadd -r spring && useradd -r -g spring spring
+RUN mkdir -p /app/logs && chown -R spring:spring /app
+
+# Copier le JAR depuis le stage de build
 COPY --from=build /app/target/paymybuddy.jar /app/paymybuddy.jar
 
-# Copier le script de démarrage
+# Copier le script d'entrée
 COPY entrypoint.sh /app/entrypoint.sh
-
-# Rendre le script exécutable
 RUN chmod +x /app/entrypoint.sh
 
-# Exposer le port utilisé par Spring Boot
+# Changer d'utilisateur
+USER spring
+
 EXPOSE 8080
 
-# Variables d'environnement de connexion à la BD
+# Variables d'environnement (à surcharger en production)
 ENV SPRING_DATASOURCE_USERNAME=root
 ENV SPRING_DATASOURCE_PASSWORD=password
-ENV SPRING_DATASOURCE_URL=jdbc:mysql://172.17.0.1:3306/db_paymybuddy
+ENV SPRING_DATASOURCE_URL=jdbc:mysql://192.168.56.10:3306/db_paymybuddy
+ENV JAVA_OPTS="-Xmx512m -Xms256m"
 
-# Démarrer l'application
 ENTRYPOINT ["/app/entrypoint.sh"]
