@@ -74,15 +74,25 @@ Déployer les ressources Kubernetes:
    kubectl apply -f mysql-service.yaml
    kubectl apply -f paymybuddy-deployment.yaml
    kubectl apply -f paymybuddy-service.yaml
-   Vérifier le Déploiement
-   Les deployments :bash
+   
+   Vérifier le Déploiement:
+   
+   Les deployments :
+   
    kubectl get deploy
-   Services :bash
+   
+   Services :
+   
    kubectl get svc
-   Pods :bash
+   
+   Pods :
+   
    kubectl get po
+   
 💾 Gestion du Stockage
+
 Stratégie de Persistance
+
 Composant : MySQL
 Chemin Container : /var/lib/mysql
 Chemin Host : /data/mysql
@@ -94,11 +104,13 @@ Chemin Host : /data/paymybuddy
 Type : hostPath
 
 Avantages :
+
 Simplicité de mise en œuvre
-Accès direct aux données
+Accès direct aux donnéesh
 Pas de configuration complexe de volumes persistants
 
 🔒 Sécurité et Réseau
+
 Politique de Sécurité
 MySQL en ClusterIP : Non accessible de l'extérieur
 PayMyBuddy en NodePort : Accessible uniquement sur le port spécifique
