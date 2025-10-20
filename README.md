@@ -78,6 +78,8 @@ Déployer les ressources Kubernetes:
    
       kubectl get deploy
       ![image](https://github.com/user-attachments/assets/02cec1a1-9264-456c-9dee-1555f2d65df5)
+      ![Description de l'image](https://github.com/user-attachments/assets/02cec1a1-9264-456c-9dee-1555f2d65df5)
+
 
 
    
