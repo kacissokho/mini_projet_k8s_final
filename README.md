@@ -46,20 +46,19 @@ Déploiement PayMyBuddy (paymybuddy-deployment.yaml)
 
 Prérequis:
 
-minikube configuré
+  minikube configuré
 
 Étapes de Déploiement:
 
-Cloner le Repositorybash:
-git clone https://github.com/OlivierKouokam/PayMyBuddy.git
-cd PayMyBuddy
+ Cloner le Repositorybash:
+ git clone https://github.com/OlivierKouokam/PayMyBuddy.git
+ cd PayMyBuddy
    
-Construire l'Image Dockerbash:
+Construire l'Image Docker:
    
    docker build -t paymybuddy:latest .
    
-   Appliquer les Manifests:
-   
+Appliquer les Manifests: 
 Créer les répertoires de données:
 
    sudo mkdir -p /data/mysql
@@ -73,44 +72,43 @@ Déployer les ressources Kubernetes:
    kubectl apply -f paymybuddy-service.yaml
    
    Vérifier le Déploiement:
-   
    Les deployments :
    
-   kubectl get deploy
+      kubectl get deploy
    
    Services :
    
-   kubectl get svc
+      kubectl get svc
    
    Pods :
    
-   kubectl get po
+      kubectl get po
    
 💾 Gestion du Stockage
 
 Stratégie de Persistance
 
-Composant : MySQL
+Composant MySQL:
 
-Chemin Container : /var/lib/mysql
+  Chemin Container : /var/lib/mysql
 
-Chemin Host : /data/mysql
+  Chemin Host : /data/mysql
 
-Type : hostPath
+  Type : hostPath
 
-Composant : PayMyBuddy
+Composant PayMyBuddy:
 
-Chemin Container : /app/data
+  Chemin Container : /app/data
 
-Chemin Host : /data/paymybuddy
+  Chemin Host : /data/paymybuddy
 
-Type : hostPath
+  Type : hostPath
 
 Avantages :
 
-Simplicité de mise en œuvre
-Accès direct aux donnéesh
-Pas de configuration complexe de volumes persistants
+ Simplicité de mise en œuvre
+ Accès direct aux donnéesh
+ Pas de configuration complexe de volumes persistants
 
 🔒 Sécurité et Réseau
 
@@ -143,3 +141,4 @@ http://192.168.56.10:30081
 Ce déploiement démontre une architecture Kubernetes complète pour une application Spring Boot avec base de données MySQL.
 
 Statut : ✅ Déploiement réussi
+
