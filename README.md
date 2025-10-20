@@ -51,21 +51,18 @@ minikube configuré
 Étapes de Déploiement:
 
 Cloner le Repositorybash:
-
-   git clone https://github.com/OlivierKouokam/PayMyBuddy.git
+git clone https://github.com/OlivierKouokam/PayMyBuddy.git
+cd PayMyBuddy
    
-   cd PayMyBuddy
-   
-   Construire l'Image Dockerbash:
+Construire l'Image Dockerbash:
    
    docker build -t paymybuddy:latest .
    
-   Appliquer les Manifestsbash:
+   Appliquer les Manifests:
    
 Créer les répertoires de données:
 
    sudo mkdir -p /data/mysql
-   
    sudo mkdir -p /data/paymybuddy
    
 Déployer les ressources Kubernetes:
@@ -118,21 +115,27 @@ Pas de configuration complexe de volumes persistants
 🔒 Sécurité et Réseau
 
 Politique de Sécurité
+
 MySQL en ClusterIP : Non accessible de l'extérieur
+
 PayMyBuddy en NodePort : Accessible uniquement sur le port spécifique
+
 Isolation : Les pods communiquent via le réseau interne Kubernetes
 
 Service MySQL :
+
 Port Interne : 3306
 Port Externe : Aucun
 Accès : Cluster interne
 
 Service PayMyBuddy :
+
 Port Interne : 8080
 Port Externe : 30081
 Accès : Public
 
 🚀 Accès à l'Application
+
 Une fois déployée, l'application est accessible à l'adresse :
 http://192.168.56.10:30081
 
