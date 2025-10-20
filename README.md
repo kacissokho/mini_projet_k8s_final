@@ -94,13 +94,19 @@ Déployer les ressources Kubernetes:
 Stratégie de Persistance
 
 Composant : MySQL
+
 Chemin Container : /var/lib/mysql
+
 Chemin Host : /data/mysql
+
 Type : hostPath
 
 Composant : PayMyBuddy
+
 Chemin Container : /app/data
+
 Chemin Host : /data/paymybuddy
+
 Type : hostPath
 
 Avantages :
