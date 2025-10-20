@@ -5,8 +5,8 @@ Rapport de Déploiement PayMyBuddy sur Kubernetes
 Ce projet consiste au déploiement de l'application PayMyBuddy  sur un cluster Kubernetes en utilisant des manifests YAML natifs plutôt que Helm. 
 L'objectif est de comprendre  les mécanismes de déploiement Kubernetes.
 
-Repository Source :  
-PayMyBuddy GitHub
+Repository Source :   
+    https://github.com/OlivierKouokam/PayMyBuddy/
 
 📁 Manifests Kubernetes
 
