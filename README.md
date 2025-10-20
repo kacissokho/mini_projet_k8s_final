@@ -53,7 +53,7 @@ Prérequis:
 
    Cloner le Repository:
    
-   git clone https://github.com/OlivierKouokam/PayMyBuddy.git
+   git clone https://github.com/kacissokho/mini_projet_k8s_final.git
    cd PayMyBuddy
    
 Construire l'Image Docker:
@@ -77,6 +77,8 @@ Déployer les ressources Kubernetes:
    Les deployments :
    
       kubectl get deploy
+      <img width="1402" height="96" alt="image" src="https://github.com/user-attachments/assets/02cec1a1-9264-456c-9dee-1555f2d65df5" />
+
    
    Services :
    
