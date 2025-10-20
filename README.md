@@ -46,22 +46,28 @@ Déploiement PayMyBuddy (paymybuddy-deployment.yaml)
 🛠️ Procédure de Déploiement*:
 
 Prérequis:
+
    minikube configuré
 
 Étapes de Déploiement:
+
    Cloner le Repository:
+   
    git clone https://github.com/OlivierKouokam/PayMyBuddy.git
    cd PayMyBuddy
    
 Construire l'Image Docker:
+
    docker build -t paymybuddy:latest .
    
 Appliquer les Manifests: 
+
     Créer les répertoires de données:
     sudo mkdir -p /data/mysql
     sudo mkdir -p /data/paymybuddy
    
 Déployer les ressources Kubernetes:
+
    kubectl apply -f mysql-deployment.yaml
    kubectl apply -f mysql-service.yaml
    kubectl apply -f paymybuddy-deployment.yaml
