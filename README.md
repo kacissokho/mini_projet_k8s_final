@@ -6,31 +6,6 @@ Ce projet consiste au déploiement de l'application PayMyBuddy (une application 
 Repository Source :  
 PayMyBuddy GitHub
 
-🏗️ Architecture du Déploiement
-Composants Déployés
-
-| Composant      | Type                  | Réplicas | Port | Stockage       |
-|----------------|-----------------------|----------|------|----------------|
-| MySQL          | Deployment + ClusterIP | 1        | 3306 | /data/mysql    |
-| PayMyBuddy     | Deployment + NodePort  | 1        | 8080 | /data/paymybuddy |
-
-Schéma d'Architecture
-┌─────────────────┐    ┌──────────────────┐
-│   Utilisateur   │───▶│  Service NodePort │
-└─────────────────┘    │    Port: 30081    │
-                       └──────────────────┘
-                                │
-                                ▼
-┌─────────────────┐    ┌──────────────────┐
-│  PayMyBuddy App │◄───│ PayMyBuddy Pod   │
-│   Spring Boot   │    │   Port: 8080     │
-└─────────────────┘    └──────────────────┘
-         │                        │
-         ▼                        │
-┌─────────────────┐    ┌──────────────────┐
-│  MySQL Database │◄───│  MySQL Pod       │
-│                 │    │   Port: 3306     │
-└─────────────────┘    └──────────────────┘
 📁 Manifests Kubernetes
 Déploiement MySQL (mysql-deployment.yaml)
    Objectifs :
@@ -92,11 +67,15 @@ Déployer les ressources Kubernetes
    kubectl get po
 💾 Gestion du Stockage
 Stratégie de Persistance
+Composant : MySQL
+Chemin Container : /var/lib/mysql
+Chemin Host : /data/mysql
+Type : hostPath
 
-| Composant      | Chemin Container      | Chemin Host   | Type     |
-|----------------|-----------------------|----------------|----------|
-| MySQL          | /var/lib/mysql        | /data/mysql    | hostPath |
-| PayMyBuddy     | /app/data             | /data/paymybuddy| hostPath |
+Composant : PayMyBuddy
+Chemin Container : /app/data
+Chemin Host : /data/paymybuddy
+Type : hostPath
 
 Avantages :
 Simplicité de mise en œuvre
@@ -109,10 +88,15 @@ MySQL en ClusterIP : Non accessible de l'extérieur
 PayMyBuddy en NodePort : Accessible uniquement sur le port spécifique
 Isolation : Les pods communiquent via le réseau interne Kubernetes
 
-| Service        | Port Interne | Port Externe | Accès           |
-|----------------|--------------|--------------|------------------|
-| MySQL          | 3306         | Aucun        | Cluster interne   |
-| PayMyBuddy     | 8080         | 30081        | Public            |
+Service MySQL :
+Port Interne : 3306
+Port Externe : Aucun
+Accès : Cluster interne
+
+Service PayMyBuddy :
+Port Interne : 8080
+Port Externe : 30081
+Accès : Public
 
 🚀 Accès à l'Application
 Une fois déployée, l'application est accessible à l'adresse :
