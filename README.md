@@ -1,59 +1,75 @@
 Rapport de Déploiement PayMyBuddy sur Kubernetes
 
 🚀 Aperçu du Projet
+
 Ce projet consiste au déploiement de l'application PayMyBuddy (une application Spring Boot de transfert d'argent entre amis) sur un cluster Kubernetes en utilisant des manifests YAML natifs plutôt que Helm. L'objectif est de comprendre en profondeur les mécanismes de déploiement Kubernetes.
 
 Repository Source :  
 PayMyBuddy GitHub
 
 📁 Manifests Kubernetes
+
 Déploiement MySQL (mysql-deployment.yaml)
+
    Objectifs :
+   
      Déployer une instance MySQL unique
      Configurer la base de données db_paymybuddy
      Persister les données sur le host
 
 Service MySQL (mysql-service.yaml)
+
    Objectifs :
+   
      Exposer MySQL en interne dans le cluster
      Fournir un DNS stable (mysql-service)
      Type ClusterIP pour la sécurité
 
 Déploiement PayMyBuddy (paymybuddy-deployment.yaml)
+
    Objectifs :
+   
      Déployer l'application Spring Boot
      Configurer la connexion à MySQL
      Persister les données applicatives
    
-   Variables d'Environnement (extraites du Dockerfile) :yaml
-   env:
-   name: SPRING_DATASOURCE_USERNAME
-     value: "root"
-   name: SPRING_DATASOURCE_PASSWORD
-     value: "password"
-   name: SPRING_DATASOURCE_URL
-     value: "jdbc:mysql://mysql-service:3306/db_paymybuddy"
+   
    Service PayMyBuddy (paymybuddy-service.yaml)
+   
    Objectifs :
+   
      Exposer l'application vers l'extérieur
      Type NodePort pour l'accès direct
      Port 30081 pour l'accès utilisateur
 
-🛠️ Procédure de Déploiement
-Prérequis
+🛠️ Procédure de Déploiement*:
+
+Prérequis:
+
 minikube configuré
 
-Étapes de Déploiement
-Cloner le Repositorybash
+Étapes de Déploiement:
+
+Cloner le Repositorybash:
+
    git clone https://github.com/OlivierKouokam/PayMyBuddy.git
+   
    cd PayMyBuddy
-   Construire l'Image Dockerbash
+   
+   Construire l'Image Dockerbash:
+   
    docker build -t paymybuddy:latest .
-   Appliquer les Manifestsbash
-Créer les répertoires de données
+   
+   Appliquer les Manifestsbash:
+   
+Créer les répertoires de données:
+
    sudo mkdir -p /data/mysql
+   
    sudo mkdir -p /data/paymybuddy
-Déployer les ressources Kubernetes
+   
+Déployer les ressources Kubernetes:
+
    kubectl apply -f mysql-deployment.yaml
    kubectl apply -f mysql-service.yaml
    kubectl apply -f paymybuddy-deployment.yaml
